@@ -22,10 +22,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import jp.co.yumemi.android.code_check.ViewModel.RepoViewModel
 import jp.co.yumemi.android.code_check.components.RepoColumn
 import jp.co.yumemi.android.code_check.components.SearchBar
 import jp.co.yumemi.android.code_check.components.TopBar
+import jp.co.yumemi.android.code_check.screen.MainScreen
 import jp.co.yumemi.android.code_check.screen.repoScreen
 import java.util.*
 
@@ -39,46 +39,20 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val navController = rememberNavController()
-            val SearchViewModel by viewModels<SearchViewModel>()
-            val searchRepo by SearchViewModel.searchQuery.collectAsState()
-            val repoList by SearchViewModel.repoList.collectAsState()
             NavHost(navController = navController, startDestination = "MainScreen") {
                 composable(route = "MainScreen") {
-                    Scaffold(topBar = { TopBar() }) {
-                        Column() {
-                            Box(
-                                contentAlignment = Alignment.Center,
-                                modifier = Modifier.padding(4.dp)
-                            ) {
-                                SearchBar(
-                                    modifier = Modifier
-                                        .padding(it)
-                                        .fillMaxWidth(),
-                                    value = searchRepo,
-                                    onChange = { SearchViewModel.changeQuery(it) },
-                                    onSearch = { SearchViewModel.searchRepo() }
-                                )
-                            }
-                            if (repoList.isNotEmpty())
-                                RepoColumn(
-                                    items = repoList,
-                                    naviToRepoScreen = {
-                                        navController.navigate("RepoScreen/${it.name}")
-                                    },
-                                )
-                        }
-                    }
+                    MainScreen(navController = navController)
                 }
                 composable(
-                    route = "RepoScreen/{repos_url}/{name}",
+                    route = "RepoScreen/{id}",
                     arguments = listOf(
-                        navArgument(name = "name") {
-                            type = NavType.StringType
+                        navArgument(name = "id") {
+                            type = NavType.IntType
                         }
                     )
                 ) {
-                    val name = it.arguments!!.getString("name")!!
-                    repoScreen(name = name)
+                    val id = it.arguments!!.getInt("id")!!
+                    repoScreen(id)
                 }
             }
         }
