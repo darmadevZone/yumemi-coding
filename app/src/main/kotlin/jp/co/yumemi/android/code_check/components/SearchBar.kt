@@ -19,6 +19,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 
@@ -54,7 +55,7 @@ fun SearchBar(
             Icon(imageVector = Icons.Default.Search, contentDescription = "searchIcon")
         },
         onValueChange = onChange,
-        modifier = modifier.focusRequester(focusRequester),
+        modifier = modifier.focusRequester(focusRequester).testTag("textField"),
         colors = TextFieldDefaults.textFieldColors(),
         shape = RepoTextFieldedShape,
         maxLines = minLines,

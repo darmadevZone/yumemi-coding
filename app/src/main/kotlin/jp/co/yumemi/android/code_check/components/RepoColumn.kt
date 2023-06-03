@@ -13,19 +13,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import jp.co.yumemi.android.code_check.RepoItem
-import jp.co.yumemi.android.code_check.ViewModel.SearchDetailViewModel
 
 @Composable
 fun RepoColumn(
     items: List<RepoItem>,
-    viewModel: SearchDetailViewModel = SearchDetailViewModel(),
     naviToRepoScreen: (RepoItem) -> Unit
 ) {
     LazyColumn {
         items(items) { item ->
             repoItem(item = item, onClick = {
                 naviToRepoScreen(item)
-//                viewModel.getRepoData(item.owner, item.owner.repos_url)
             })
         }
     }
