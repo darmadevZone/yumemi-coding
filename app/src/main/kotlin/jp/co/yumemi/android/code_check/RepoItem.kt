@@ -1,7 +1,6 @@
 package jp.co.yumemi.android.code_check
 
 import android.os.Parcelable
-import com.squareup.moshi.FromJson
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonQualifier
 import kotlinx.android.parcel.Parcelize
